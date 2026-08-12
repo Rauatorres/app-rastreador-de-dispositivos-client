@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import connect from "../../../api/connect";
 import type ConnectionData from "../../../model/connectionData";
+import ConnectContext from "../../../shared/context/connect/ConnectContext";
 
 export default function ConnectDeviceForm() {
   const [serverUrl, setServerUrl] = useState("");
   const [data, setData] = useState<ConnectionData>({ ipAddress: "", name: "" });
+  const { connectDevice } = useContext(ConnectContext);
 
   async function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
     const connection = await connect(serverUrl, data);
     if (connection.success) {
       console.log(connection.msg);
+      connectDevice();
     } else {
       console.log(connection.error);
     }
