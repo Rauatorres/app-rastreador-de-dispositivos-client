@@ -12,8 +12,8 @@ export default function ConnectDeviceForm() {
     e.preventDefault();
     const connection = await connect(serverUrl, data);
     if (connection.success) {
+      connectDevice(serverUrl, connection.connectionId!);
       console.log(connection.msg);
-      connectDevice();
     } else {
       console.log(connection.error);
     }
