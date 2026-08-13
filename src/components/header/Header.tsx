@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import Navlink from "./navlink/Navlink";
+import PageContext from "../../shared/context/page/PageContext";
 
 export default function Header() {
+  const { changePageToDevice, changePageToMap } = useContext(PageContext);
+
   return (
     <header
       className={`
@@ -18,8 +22,8 @@ export default function Header() {
         text-lg
             `}
         >
-          <Navlink title="conectar dispositivo" />
-          <Navlink title="logar como admin" />
+          <Navlink title="conectar dispositivo" onclick={changePageToDevice} />
+          <Navlink title="ver mapa" onclick={changePageToMap} />
         </ul>
       </nav>
     </header>
