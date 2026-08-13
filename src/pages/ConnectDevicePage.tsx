@@ -1,13 +1,13 @@
 // import ConnectDeviceForm from "../components/connect-device/connect-device-form/ConnectDeviceForm";
+import { CookiesProvider } from "react-cookie";
 import ConnectDeviceSection from "../components/connect-device/connect-device-section/ConnectDeviceSection";
-import ConnectContextWrapper from "../shared/context/connect/ConnectContextWrapper";
 
 export default function ConnectDevicePage() {
   return (
     <main>
-      <ConnectContextWrapper>
+      <CookiesProvider>
         <ConnectDeviceSection />
-      </ConnectContextWrapper>
+      </CookiesProvider>
     </main>
   );
 }

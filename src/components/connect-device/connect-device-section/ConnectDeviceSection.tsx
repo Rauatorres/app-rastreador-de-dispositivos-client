@@ -1,14 +1,15 @@
-import { useContext } from "react";
-import ConnectContext from "../../../shared/context/connect/ConnectContext";
+// import { useContext } from "react";
+// import ConnectContext from "../../../shared/context/connect/ConnectContext";
 import ConnectDeviceForm from "../connect-device-form/ConnectDeviceForm";
 import ConnectedDeviceScreen from "../connected-device-screen/ConnectedDeviceScreen";
+import { useCookies } from "react-cookie";
 
 export default function ConnectDeviceSection() {
-  const { isDeviceConnected } = useContext(ConnectContext);
+  const [cookie] = useCookies(["connectionId"]);
 
   return (
     <section>
-      {isDeviceConnected ? <ConnectedDeviceScreen /> : <ConnectDeviceForm />}
+      {cookie.connectionId ? <ConnectedDeviceScreen /> : <ConnectDeviceForm />}
     </section>
   );
 }

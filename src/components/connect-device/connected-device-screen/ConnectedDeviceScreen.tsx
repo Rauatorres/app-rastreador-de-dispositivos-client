@@ -1,21 +1,24 @@
-import { useContext, useEffect, useState } from "react";
-import ConnectContext from "../../../shared/context/connect/ConnectContext";
+import { useEffect, useState } from "react";
 import disconnect from "../../../api/disconnect";
 import type ConnectionData from "../../../model/connectionData";
 import update from "../../../api/update";
 import getConnectedDevice from "../../../api/get-connected-device";
+import { useCookies } from "react-cookie";
 
 export default function ConnectedDeviceScreen() {
-  const { disconnectDevice, connectedUrl, connectedDeviceId } =
-    useContext(ConnectContext);
-
   const [currentDeviceName, setCurrentDeviceName] = useState("");
   const [newDeviceName, setNewDeviceName] = useState("");
+  const [cookie, setCookie] = useCookies([
+    "connectionId",
+    "connectedServerUrl",
+  ]);
 
   useEffect(() => {
     async function getCurrentDeviceName() {
-      // setTimeout(async () => {
-      const res = await getConnectedDevice(connectedUrl, connectedDeviceId);
+      const res = await getConnectedDevice(
+        cookie.connectedServerUrl,
+        cookie.connectionId,
+      );
       if (res.success) {
         const responseResult = res.result as ConnectionData;
         setCurrentDeviceName(responseResult.name);
@@ -25,21 +28,24 @@ export default function ConnectedDeviceScreen() {
       }
     }
     getCurrentDeviceName();
-  }, [connectedUrl, connectedDeviceId]);
+  }, [cookie.connectionId, cookie.connectedServerUrl]);
 
   async function disconnectDeviceFromUrl() {
-    const res = await disconnect(connectedUrl, connectedDeviceId);
+    const res = await disconnect(
+      cookie.connectedServerUrl,
+      cookie.connectionId,
+    );
     if (res.success) {
       console.log(res.msg);
-      disconnectDevice();
+      setCookie("connectionId", false);
+      setCookie("connectedServerUrl", "");
     } else {
       console.log(res.error);
-      console.log(connectedDeviceId);
     }
   }
 
   async function updateDeviceName() {
-    const res = await update(connectedUrl, connectedDeviceId, {
+    const res = await update(cookie.connectedServerUrl, cookie.connectionId, {
       name: newDeviceName,
     });
     if (res.success) {
