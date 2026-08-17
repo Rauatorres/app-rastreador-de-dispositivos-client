@@ -4,37 +4,39 @@ import ConnectedDeviceCard from "../components/map/ConnectedDeviceCard";
 import type ConnectionData from "../model/connectionData";
 
 export default function MapPage() {
-    const [connectedDevices, setConnectedDevices] = useState<ConnectionData[]>([])
+  const [connectedDevices, setConnectedDevices] = useState<ConnectionData[]>(
+    [],
+  );
 
-    useEffect(() => {
-      async function registerConnectedDevices(){
-        const getConnectedDevicesRequest = (await getConnectedDevices("http://192.168.0.115:3000/"))
+  useEffect(() => {
+    async function registerConnectedDevices() {
+      const getConnectedDevicesRequest = await getConnectedDevices(
+        "http://192.168.0.8:3000/",
+      );
 
-        if(getConnectedDevicesRequest.success){
-          setConnectedDevices(getConnectedDevicesRequest
-            .result! as ConnectionData[]
-          )
-          console.log(getConnectedDevicesRequest.msg)
-        } else{
-          console.log(getConnectedDevicesRequest.error)
-        }
-
+      if (getConnectedDevicesRequest.success) {
+        setConnectedDevices(
+          getConnectedDevicesRequest.result! as ConnectionData[],
+        );
+        console.log(getConnectedDevicesRequest.msg);
+      } else {
+        console.log(getConnectedDevicesRequest.error);
       }
-      registerConnectedDevices()
-    }, [])
+    }
+    registerConnectedDevices();
+  }, []);
 
   function showConnectedDevices() {
-    
-        
-        return connectedDevices.map((device) => {
-          return (
-            <ConnectedDeviceCard
-            key={device.connectionId}
-              name={device.name}
-              connectionId={device.connectionId}
-            />
-          );
-        });
+    return connectedDevices.map((device) => {
+      return (
+        <ConnectedDeviceCard
+          key={device.connectionId}
+          name={device.name}
+          connectionId={device.connectionId!}
+          locale={device.locale}
+        />
+      );
+    });
   }
 
   return (

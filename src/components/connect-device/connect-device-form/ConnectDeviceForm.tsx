@@ -1,27 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import connect from "../../../api/connect";
 import type ConnectionData from "../../../model/connectionData";
 import { useCookies } from "react-cookie";
 
 export default function ConnectDeviceForm() {
   const [serverUrl, setServerUrl] = useState("");
-  const [data, setData] = useState<ConnectionData>({ ipAddress: "", name: "" });
+  const [dataNameInput, setDataNameInput] = useState("");
+  const [data, setData] = useState<ConnectionData>({
+    ipAddress: "",
+    name: "",
+    locale: "",
+  });
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_cookie, setCookie] = useCookies([
     "connectionId",
     "connectedServerUrl",
   ]);
 
+  useEffect(() => {
+    console.log(data);
+    async function connectDevice() {
+      const connection = await connect(serverUrl, data);
+      if (connection.success) {
+        setCookie("connectionId", connection.connectionId);
+        setCookie("connectedServerUrl", serverUrl);
+        console.log(connection.msg);
+      } else {
+        console.log(connection.error);
+      }
+    }
+    if (data.name) {
+      connectDevice();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
   async function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
-    const connection = await connect(serverUrl, data);
-    if (connection.success) {
-      setCookie("connectionId", connection.connectionId);
-      setCookie("connectedServerUrl", serverUrl);
-      console.log(connection.msg);
-    } else {
-      console.log(connection.error);
-    }
+    navigator.geolocation.getCurrentPosition(async (location) => {
+      const { latitude, longitude } = location.coords;
+      const newData = {
+        ...data,
+        name: dataNameInput,
+        locale: `lat: ${latitude} long: ${longitude}`,
+      };
+      setData(newData);
+    });
   }
 
   return (
@@ -49,7 +73,7 @@ export default function ConnectDeviceForm() {
             w-150
             `}
         type="text"
-        onChange={(e) => setData({ ...data, name: e.target.value })}
+        onChange={(e) => setDataNameInput(e.target.value)}
       />
       <button
         className={`
