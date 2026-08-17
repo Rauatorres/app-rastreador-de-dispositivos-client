@@ -15,10 +15,7 @@ export default function ConnectedDeviceScreen() {
 
   useEffect(() => {
     async function getCurrentDeviceName() {
-      const res = await getConnectedDevice(
-        cookie.connectedServerUrl,
-        cookie.connectionId,
-      );
+      const res = await getConnectedDevice(cookie.connectionId);
       if (res.success) {
         const responseResult = res.result as ConnectionData;
         setCurrentDeviceName(responseResult.name);
@@ -31,21 +28,18 @@ export default function ConnectedDeviceScreen() {
   }, [cookie.connectionId, cookie.connectedServerUrl]);
 
   async function disconnectDeviceFromUrl() {
-    const res = await disconnect(
-      cookie.connectedServerUrl,
-      cookie.connectionId,
-    );
+    const res = await disconnect(cookie.connectionId);
     if (res.success) {
       console.log(res.msg);
-      setCookie("connectionId", false);
-      setCookie("connectedServerUrl", "");
     } else {
       console.log(res.error);
     }
+    setCookie("connectionId", false);
+    setCookie("connectedServerUrl", "");
   }
 
   async function updateDeviceName() {
-    const res = await update(cookie.connectedServerUrl, cookie.connectionId, {
+    const res = await update(cookie.connectionId, {
       name: newDeviceName,
     });
     if (res.success) {
