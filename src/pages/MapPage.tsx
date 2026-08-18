@@ -59,8 +59,6 @@ export default function MapPage() {
 
   function showMap() {
     if (connectedDevices.length > 0) {
-      console.log(connectedDevices);
-
       return (
         <Map
           // className="w-90 h-90"
@@ -84,11 +82,12 @@ export default function MapPage() {
   }
 
   return (
-    <main>
+    <main className="p-5">
       <h2>Mapa</h2>
       <div
         className="
-        w-150 h-100
+        lg:w-150 lg:h-100 w-100 h-60
+        my-5
       "
       >
         <APIProvider apiKey="AIzaSyAVbkHnA-UrQhYf_DL7Yk8uvJWB5rfTj0g">
