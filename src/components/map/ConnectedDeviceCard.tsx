@@ -11,10 +11,10 @@ export default function ConnectedDeviceCard(props: ConnectedDeviceCardProps) {
   return (
     <div>
       <p>Nome: {props.name}</p>
-      <p>
+      {/* <p>
         Localização:{" "}
         {`latitude: ${props.locale.lat} longitude: ${props.locale.lng}`}
-      </p>
+      </p> */}
     </div>
   );
 }

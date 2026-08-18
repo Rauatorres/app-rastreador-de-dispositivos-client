@@ -44,6 +44,16 @@ export default function MapPage() {
     });
   }
 
+  function showConnectedDevicesMarkers() {
+    return connectedDevices.map((device) => {
+      return (
+        <AdvancedMarker position={device.locale}>
+          <Pin background={"#e42d2d"} />
+        </AdvancedMarker>
+      );
+    });
+  }
+
   function showMap() {
     if (connectedDevices.length > 0) {
       console.log(connectedDevices);
@@ -56,14 +66,15 @@ export default function MapPage() {
             lat: connectedDevices[0].locale.lat,
             lng: connectedDevices[0].locale.lng,
           }}
-          defaultZoom={10}
+          defaultZoom={15}
           gestureHandling="greedy"
           mapId="90dd261c43affd40955eb3a4"
           disableDefaultUI
         >
-          <AdvancedMarker position={connectedDevices[0].locale}>
+          {/* <AdvancedMarker position={connectedDevices[0].locale}>
             <Pin background={"#e42d2d"} />
-          </AdvancedMarker>
+          </AdvancedMarker> */}
+          {showConnectedDevicesMarkers()}
         </Map>
       );
     }
