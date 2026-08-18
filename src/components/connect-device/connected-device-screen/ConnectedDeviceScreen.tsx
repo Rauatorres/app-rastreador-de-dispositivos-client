@@ -4,6 +4,8 @@ import type ConnectionData from "../../../model/connectionData";
 import update from "../../../api/update";
 import getConnectedDevice from "../../../api/get-connected-device";
 import { useCookies } from "react-cookie";
+import TextInput from "../../../shared/ui/text-input/TextInput";
+import Button from "../../../shared/ui/button/Button";
 
 export default function ConnectedDeviceScreen() {
   const [currentDeviceName, setCurrentDeviceName] = useState("");
@@ -55,11 +57,12 @@ export default function ConnectedDeviceScreen() {
     <div>
       <div>
         <h2>Dispositivo conectado</h2>
-        <button onClick={disconnectDeviceFromUrl}>Desconectar</button>
+        {/* <button onClick={disconnectDeviceFromUrl}>Desconectar</button> */}
+        <Button text="Desconectar" onclick={disconnectDeviceFromUrl} />
       </div>
       <div>
         <h2>{currentDeviceName}</h2>
-        <input
+        {/* <input
           className={`
             bg-neutral-400
             block
@@ -71,8 +74,14 @@ export default function ConnectedDeviceScreen() {
           placeholder="renomear..."
           value={newDeviceName}
           onChange={(e) => setNewDeviceName(e.target.value)}
+        /> */}
+        <TextInput
+          title="Nome do dispositivo"
+          placeholder="renomear..."
+          value={newDeviceName}
+          onchange={(e) => setNewDeviceName(e.target.value)}
         />
-        <button
+        {/* <button
           className={`
             bg-cyan-600 text-white
             px-5 py-1
@@ -83,7 +92,8 @@ export default function ConnectedDeviceScreen() {
           onClick={updateDeviceName}
         >
           Salvar
-        </button>
+        </button> */}
+        <Button text="Salvar" onclick={updateDeviceName} />
       </div>
     </div>
   );

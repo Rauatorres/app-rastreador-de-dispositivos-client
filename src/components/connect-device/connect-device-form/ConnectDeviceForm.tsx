@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import connect from "../../../api/connect";
 import type ConnectionData from "../../../model/connectionData";
 import { useCookies } from "react-cookie";
+import TextInput from "../../../shared/ui/text-input/TextInput";
+import Button from "../../../shared/ui/button/Button";
 // import ErrorMessage from "../../error-message/ErrorMessage";
 
 export default function ConnectDeviceForm() {
@@ -10,7 +12,6 @@ export default function ConnectDeviceForm() {
   // const [serverUrl, setServerUrl] = useState("");
   const [dataNameInput, setDataNameInput] = useState("");
   const [data, setData] = useState<ConnectionData>({
-    ipAddress: "",
     name: "",
     locale: {
       lat: 0,
@@ -95,7 +96,7 @@ export default function ConnectDeviceForm() {
           type="text"
           onChange={(e) => setServerUrl(e.target.value)}
         /> */}
-        <input
+        {/* <input
           className={`
             bg-neutral-400
             block
@@ -105,8 +106,12 @@ export default function ConnectDeviceForm() {
             `}
           type="text"
           onChange={(e) => setDataNameInput(e.target.value)}
+        /> */}
+        <TextInput
+          title="Nome do dispositivo"
+          onchange={(e) => setDataNameInput(e.target.value)}
         />
-        <button
+        {/* <button
           className={`
             bg-cyan-600 text-white
             px-5 py-1
@@ -117,7 +122,8 @@ export default function ConnectDeviceForm() {
           type="submit"
         >
           Conectar
-        </button>
+        </button> */}
+        <Button text="Conectar" type="submit" />
       </form>
     </>
   );

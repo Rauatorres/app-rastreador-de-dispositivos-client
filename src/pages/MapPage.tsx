@@ -50,7 +50,7 @@ export default function MapPage() {
   function showConnectedDevicesMarkers() {
     return connectedDevices.map((device) => {
       return (
-        <AdvancedMarker position={device.locale}>
+        <AdvancedMarker title={device.name} position={device.locale}>
           <Pin background={"#e42d2d"} />
         </AdvancedMarker>
       );

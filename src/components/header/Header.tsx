@@ -10,6 +10,8 @@ export default function Header() {
       className={`
         bg-cyan-500 text-white
         flex justify-between items-center
+        w-screen
+        overflow-hidden
         px-8
         py-6
     `}
