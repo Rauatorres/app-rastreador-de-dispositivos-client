@@ -3,7 +3,7 @@ export default interface ConnectionData {
   ipAddress: string;
   name: string;
   locale: {
-    latitude: string;
-    longitude: string;
+    lat: number;
+    lng: number;
   };
 }

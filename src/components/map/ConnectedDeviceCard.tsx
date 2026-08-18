@@ -2,8 +2,8 @@ type ConnectedDeviceCardProps = {
   connectionId: string;
   name: string;
   locale: {
-    latitude: string;
-    longitude: string;
+    lat: number;
+    lng: number;
   };
 };
 
@@ -13,7 +13,7 @@ export default function ConnectedDeviceCard(props: ConnectedDeviceCardProps) {
       <p>Nome: {props.name}</p>
       <p>
         Localização:{" "}
-        {`latitude: ${props.locale.latitude} longitude: ${props.locale.longitude}`}
+        {`latitude: ${props.locale.lat} longitude: ${props.locale.lng}`}
       </p>
     </div>
   );

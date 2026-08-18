@@ -7,20 +7,20 @@ import { useCookies } from "react-cookie";
 export default function ConnectDeviceForm() {
   // const [error, setError] = useState(false);
   // const [errorMsg, setErrorMsg] = useState("");
-  const [serverUrl, setServerUrl] = useState("");
+  // const [serverUrl, setServerUrl] = useState("");
   const [dataNameInput, setDataNameInput] = useState("");
   const [data, setData] = useState<ConnectionData>({
     ipAddress: "",
     name: "",
     locale: {
-      latitude: "",
-      longitude: "",
+      lat: 0,
+      lng: 0,
     },
   });
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_cookie, setCookie] = useCookies([
     "connectionId",
-    "connectedServerUrl",
+    // "connectedServerUrl",
   ]);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function ConnectDeviceForm() {
         const connection = await connect(data);
         if (connection.success) {
           setCookie("connectionId", connection.connectionId);
-          setCookie("connectedServerUrl", serverUrl);
+          // setCookie("connectedServerUrl", serverUrl);
           console.log(connection.msg);
         } else {
           console.log(connection.error);
@@ -60,14 +60,19 @@ export default function ConnectDeviceForm() {
           ...data,
           name: dataNameInput,
           locale: {
-            latitude: latitude.toString(),
-            longitude: longitude.toString(),
+            lat: latitude,
+            lng: longitude,
           },
         };
         setData(newData);
       },
       (error) => {
         console.log(error);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
       },
     );
   }
@@ -79,7 +84,7 @@ export default function ConnectDeviceForm() {
         onSubmit={(e) => handleSubmit(e)}
         className="flex flex-col gap-5 w-fit mx-auto my-50"
       >
-        <input
+        {/* <input
           className={`
             bg-neutral-400
             block
@@ -89,7 +94,7 @@ export default function ConnectDeviceForm() {
             `}
           type="text"
           onChange={(e) => setServerUrl(e.target.value)}
-        />
+        /> */}
         <input
           className={`
             bg-neutral-400

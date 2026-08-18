@@ -3,8 +3,10 @@ import getConnectedDevices from "../api/get-connected-devices";
 import ConnectedDeviceCard from "../components/map/ConnectedDeviceCard";
 import type ConnectionData from "../model/connectionData";
 import {
+  AdvancedMarker,
   APIProvider,
   Map,
+  Pin,
   // type MapCameraChangedEvent,
 } from "@vis.gl/react-google-maps";
 
@@ -42,6 +44,31 @@ export default function MapPage() {
     });
   }
 
+  function showMap() {
+    if (connectedDevices.length > 0) {
+      console.log(connectedDevices);
+
+      return (
+        <Map
+          // className="w-90 h-90"
+          // style={{ width: "20rem", height: "20rem" }}
+          defaultCenter={{
+            lat: connectedDevices[0].locale.lat,
+            lng: connectedDevices[0].locale.lng,
+          }}
+          defaultZoom={10}
+          gestureHandling="greedy"
+          mapId="90dd261c43affd40955eb3a4"
+          disableDefaultUI
+        >
+          <AdvancedMarker position={connectedDevices[0].locale}>
+            <Pin background={"#e42d2d"} />
+          </AdvancedMarker>
+        </Map>
+      );
+    }
+  }
+
   return (
     <main>
       <h2>Mapa</h2>
@@ -51,25 +78,15 @@ export default function MapPage() {
       "
       >
         <APIProvider apiKey="AIzaSyAVbkHnA-UrQhYf_DL7Yk8uvJWB5rfTj0g">
-          <Map
+          {/* <Map
             // className="w-90 h-90"
             // style={{ width: "20rem", height: "20rem" }}
             defaultCenter={{ lat: 22.54992, lng: 0 }}
             defaultZoom={3}
             gestureHandling="greedy"
             disableDefaultUI
-          />
-          {/* <Map
-            // className="w-90 h-90"
-            // style={{ width: "20rem", height: "20rem" }}
-            defaultCenter={{
-              lat: connectedDevices[0].locale.latitude,
-              lng: connectedDevices[0].locale.longitude,
-            }}
-            defaultZoom={3}
-            gestureHandling="greedy"
-            disableDefaultUI
           /> */}
+          {showMap()}
         </APIProvider>
       </div>
       <h2>Dispositivos Conectados</h2>
