@@ -14,9 +14,9 @@ function App() {
     if (cookie.connectionId) {
       setInterval(() => {
         navigator.geolocation.getCurrentPosition((location) => {
-          alert(
-            `lat: ${location.coords.latitude} long: ${location.coords.longitude}`,
-          );
+          // alert(
+          //   `lat: ${location.coords.latitude} long: ${location.coords.longitude}`,
+          // );
           update(cookie.connectionId, {
             locale: {
               lat: location.coords.latitude,
