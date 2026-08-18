@@ -86,7 +86,7 @@ export default function MapPage() {
       <h2>Mapa</h2>
       <div
         className="
-        lg:w-150 sm:w-115 w-70 h-100
+        lg:w-150 sm:w-115 w-75 h-100
         my-5
       "
       >
