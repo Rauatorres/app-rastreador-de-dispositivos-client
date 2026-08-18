@@ -10,6 +10,7 @@ export default function Button(props: ButtonProps) {
       className={`
             bg-cyan-600 text-white
             px-5 py-3
+            my-5
             cursor-pointer
             block
             text-2xl

@@ -82,16 +82,17 @@ export default function MapPage() {
   }
 
   return (
-    <main className="p-5">
-      <h2>Mapa</h2>
-      <div
-        className="
+    <main className="p-5 flex flex-col gap-10">
+      <div>
+        <h2>Mapa</h2>
+        <div
+          className="
         lg:w-150 sm:w-115 w-75 h-100
         my-5
       "
-      >
-        <APIProvider apiKey="AIzaSyAVbkHnA-UrQhYf_DL7Yk8uvJWB5rfTj0g">
-          {/* <Map
+        >
+          <APIProvider apiKey="AIzaSyAVbkHnA-UrQhYf_DL7Yk8uvJWB5rfTj0g">
+            {/* <Map
             // className="w-90 h-90"
             // style={{ width: "20rem", height: "20rem" }}
             defaultCenter={{ lat: 22.54992, lng: 0 }}
@@ -99,11 +100,14 @@ export default function MapPage() {
             gestureHandling="greedy"
             disableDefaultUI
           /> */}
-          {showMap()}
-        </APIProvider>
+            {showMap()}
+          </APIProvider>
+        </div>
       </div>
-      <h2>Dispositivos Conectados</h2>
-      <div>{showConnectedDevices()}</div>
+      <div>
+        <h2 className="text-xl">Dispositivos Conectados</h2>
+        <div className="my-10 flex gap-5">{showConnectedDevices()}</div>
+      </div>
     </main>
   );
 }

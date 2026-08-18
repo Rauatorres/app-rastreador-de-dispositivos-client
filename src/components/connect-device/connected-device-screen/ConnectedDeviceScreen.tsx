@@ -8,7 +8,7 @@ import TextInput from "../../../shared/ui/text-input/TextInput";
 import Button from "../../../shared/ui/button/Button";
 
 export default function ConnectedDeviceScreen() {
-  const [currentDeviceName, setCurrentDeviceName] = useState("");
+  // const [currentDeviceName, setCurrentDeviceName] = useState("");
   const [newDeviceName, setNewDeviceName] = useState("");
   const [cookie, setCookie] = useCookies([
     "connectionId",
@@ -20,7 +20,7 @@ export default function ConnectedDeviceScreen() {
       const res = await getConnectedDevice(cookie.connectionId);
       if (res.success) {
         const responseResult = res.result as ConnectionData;
-        setCurrentDeviceName(responseResult.name);
+        // setCurrentDeviceName(responseResult.name);
         setNewDeviceName(responseResult.name);
       } else {
         console.log(res.error);
@@ -46,53 +46,32 @@ export default function ConnectedDeviceScreen() {
     });
     if (res.success) {
       console.log(res.msg);
-      const responseResult = res.result as ConnectionData;
-      setCurrentDeviceName(responseResult.name);
+      // const responseResult = res.result as ConnectionData;
+      // setCurrentDeviceName(responseResult.name);
     } else {
       console.log(res.error);
     }
   }
 
   return (
-    <div>
+    <div
+      className={`
+      flex flex-col gap-10
+      `}
+    >
       <div>
-        <h2>Dispositivo conectado</h2>
+        <h2 className="text-xl">Dispositivo conectado</h2>
         {/* <button onClick={disconnectDeviceFromUrl}>Desconectar</button> */}
         <Button text="Desconectar" onclick={disconnectDeviceFromUrl} />
       </div>
       <div>
-        <h2>{currentDeviceName}</h2>
-        {/* <input
-          className={`
-            bg-neutral-400
-            block
-            text-3xl
-            px-7 py-5
-            w-150
-            `}
-          type="text"
-          placeholder="renomear..."
-          value={newDeviceName}
-          onChange={(e) => setNewDeviceName(e.target.value)}
-        /> */}
+        {/* <h2>{currentDeviceName}</h2> */}
         <TextInput
           title="Nome do dispositivo"
           placeholder="renomear..."
           value={newDeviceName}
           onchange={(e) => setNewDeviceName(e.target.value)}
         />
-        {/* <button
-          className={`
-            bg-cyan-600 text-white
-            px-5 py-1
-            cursor-pointer
-            block
-            text-2xl
-            `}
-          onClick={updateDeviceName}
-        >
-          Salvar
-        </button> */}
         <Button text="Salvar" onclick={updateDeviceName} />
       </div>
     </div>

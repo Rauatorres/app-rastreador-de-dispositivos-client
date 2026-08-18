@@ -9,8 +9,18 @@ type ConnectedDeviceCardProps = {
 
 export default function ConnectedDeviceCard(props: ConnectedDeviceCardProps) {
   return (
-    <div>
-      <p>Nome: {props.name}</p>
+    <div
+      className={`
+      border border-neutral-400
+      w-50
+      text-neutral-600 text-xl
+      my-3
+      p-4
+      break-all
+      flex items-center
+    `}
+    >
+      <p>{props.name}</p>
     </div>
   );
 }

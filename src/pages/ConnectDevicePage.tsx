@@ -4,7 +4,7 @@ import ConnectDeviceSection from "../components/connect-device/connect-device-se
 
 export default function ConnectDevicePage() {
   return (
-    <main>
+    <main className="p-5">
       <ConnectDeviceSection />
     </main>
   );
