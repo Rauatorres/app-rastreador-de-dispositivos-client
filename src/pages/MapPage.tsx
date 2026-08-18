@@ -29,6 +29,9 @@ export default function MapPage() {
       }
     }
     registerConnectedDevices();
+    setInterval(() => {
+      registerConnectedDevices();
+    }, 2000);
   }, []);
 
   function showConnectedDevices() {

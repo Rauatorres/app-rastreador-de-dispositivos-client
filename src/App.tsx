@@ -24,7 +24,7 @@ function App() {
             },
           });
         });
-      }, 5000);
+      }, 1000);
     }
   }, [cookie.connectionId]);
 
