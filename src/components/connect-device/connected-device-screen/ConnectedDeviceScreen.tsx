@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import disconnect from "../../../api/disconnect";
-import type ConnectionData from "../../../model/connectionData";
+// import type ConnectionData from "../../../model/connectionData";
 import update from "../../../api/update";
 import getConnectedDevice from "../../../api/get-connected-device";
 import { useCookies } from "react-cookie";
@@ -10,47 +10,47 @@ import Button from "../../../shared/ui/button/Button";
 export default function ConnectedDeviceScreen() {
   // const [currentDeviceName, setCurrentDeviceName] = useState("");
   const [newDeviceName, setNewDeviceName] = useState("");
-  const [cookie, setCookie] = useCookies([
-    "connectionId",
-    "connectedServerUrl",
-  ]);
+  const [cookie, setCookie] = useCookies(["connectionId"]);
 
   useEffect(() => {
     async function getCurrentDeviceName() {
       const res = await getConnectedDevice(cookie.connectionId);
-      if (res.success) {
-        const responseResult = res.result as ConnectionData;
+      if (res) {
+        // const responseResult = res.result as ConnectionData;
         // setCurrentDeviceName(responseResult.name);
-        setNewDeviceName(responseResult.name);
-      } else {
-        console.log(res.error);
+        setNewDeviceName(res.name);
       }
+      // else {
+      //   console.log(res.error);
+      // }
     }
     getCurrentDeviceName();
-  }, [cookie.connectionId, cookie.connectedServerUrl]);
+  }, [cookie.connectionId]);
 
   async function disconnectDeviceFromUrl() {
     const res = await disconnect(cookie.connectionId);
-    if (res.success) {
+    if (res) {
       console.log(res.msg);
-    } else {
-      console.log(res.error);
     }
+    // else {
+    //   console.log(res.error);
+    // }
     setCookie("connectionId", false);
-    setCookie("connectedServerUrl", "");
+    // setCookie("connectedServerUrl", "");
   }
 
   async function updateDeviceName() {
     const res = await update(cookie.connectionId, {
       name: newDeviceName,
     });
-    if (res.success) {
+    if (res) {
       console.log(res.msg);
       // const responseResult = res.result as ConnectionData;
       // setCurrentDeviceName(responseResult.name);
-    } else {
-      console.log(res.error);
     }
+    // else {
+    //   console.log(res.error);
+    // }
   }
 
   return (
