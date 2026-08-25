@@ -40,6 +40,7 @@ export default function ConnectDeviceForm() {
 
   async function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
+    console.log("teste");
     navigator.geolocation.getCurrentPosition(
       async (location) => {
         const { latitude, longitude } = location.coords;
