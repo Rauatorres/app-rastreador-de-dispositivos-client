@@ -27,23 +27,9 @@ export default function ConnectDeviceForm() {
   useEffect(() => {
     // console.log(data);
     async function connectDevice() {
-      try {
-        const connection = await connect(data);
-        if (connection.success) {
-          setCookie("connectionId", connection.connectionId);
-          // setCookie("connectedServerUrl", serverUrl);
-          console.log(connection.msg);
-        } else {
-          console.log(connection.error);
-          // setError(true);
-          // setErrorMsg(connection.error!);
-        }
-      } catch (err) {
-        if (err instanceof Error) {
-          // setError(true);
-          // setErrorMsg(err.message);
-        }
-        console.log(err);
+      const connection = await connect(data);
+      if (connection) {
+        setCookie("connectionId", connection.id);
       }
     }
     if (data.name) {

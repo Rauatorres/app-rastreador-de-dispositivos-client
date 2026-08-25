@@ -4,9 +4,14 @@ import type ConnectionData from "../model/connectionData";
 import { connectionConfigs } from "./connection-configs";
 
 export default async function connect(data: ConnectionData) {
-  const connectionData = (
-    await axios.post(connectionConfigs.url + "connection-configs", data)
-  ).data;
+  try {
+    const connectionData = (
+      await axios.post(connectionConfigs.url + "connection-configs", data)
+    ).data;
+    return connectionData as ConnectionData;
+  } catch (error) {
+    console.log(error);
+  }
   // const responseObject: ApiResponse = {
   //   success: connectionData.success,
   //   msg: connectionData.msg,
@@ -14,6 +19,5 @@ export default async function connect(data: ConnectionData) {
   //   connectionId: connectionData.connectionId,
   // };
   // return responseObject;
-  console.log(connectionData);
-  return connectionData;
+  // console.log(connectionData);
 }
