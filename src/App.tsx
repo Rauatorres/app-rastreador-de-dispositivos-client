@@ -24,7 +24,6 @@ function App() {
     <>
       <Header />
       {showPage()}
-      <button onClick={() => console.log(cookie.connectionId)}>cookie</button>
     </>
   );
 }
