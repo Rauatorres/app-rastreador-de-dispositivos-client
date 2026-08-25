@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import getConnectedDevices from "../api/connection-configs/get-connected-devices";
+import getConnectedDevices from "../api/connection-configs/connection-configs.get-connected-devices";
 import ConnectedDeviceCard from "../components/map/ConnectedDeviceCard";
 import type ConnectionData from "../model/connectionData";
 import {
