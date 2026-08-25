@@ -41,28 +41,28 @@ export default function ConnectDeviceForm() {
   async function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
     console.log("teste");
-    navigator.geolocation.getCurrentPosition(
-      async (location) => {
-        const { latitude, longitude } = location.coords;
-        const newData = {
-          ...data,
-          name: dataNameInput,
-          locale: {
-            lat: latitude,
-            lng: longitude,
-          },
-        };
-        setData(newData);
+    // navigator.geolocation.getCurrentPosition(
+    //   async (location) => {
+    //     const { latitude, longitude } = location.coords;
+
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   },
+    //   {
+    //     enableHighAccuracy: true,
+    //     timeout: 10000,
+    //     maximumAge: 0,
+    //   },
+    // );
+    const newData = {
+      name: dataNameInput,
+      deviceLocale: {
+        lat: -11.38243,
+        lng: -41.83171,
       },
-      (error) => {
-        console.log(error);
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0,
-      },
-    );
+    };
+    setData(newData);
   }
 
   return (

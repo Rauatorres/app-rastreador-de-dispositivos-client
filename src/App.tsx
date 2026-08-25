@@ -5,6 +5,7 @@ import PageContext from "./shared/context/page/PageContext";
 import MapPage from "./pages/MapPage";
 import { useCookies } from "react-cookie";
 import deviceLocaleUpdate from "./api/device-locale/device-locale.update";
+import getConnectedDevice from "./api/connection-configs/connection-configs.get-connected-device";
 
 function App() {
   const { currentPage } = useContext(PageContext);
@@ -13,11 +14,14 @@ function App() {
   useEffect(() => {
     if (cookie.connectionId) {
       setInterval(() => {
-        navigator.geolocation.getCurrentPosition((location) => {
+        navigator.geolocation.getCurrentPosition(async (location) => {
           // alert(
           //   `lat: ${location.coords.latitude} long: ${location.coords.longitude}`,
           // );
-          deviceLocaleUpdate(cookie.connectionId, {
+          const connectionConfigs = await getConnectedDevice(
+            cookie.connectionId,
+          );
+          deviceLocaleUpdate(connectionConfigs!.deviceLocale.id!, {
             lat: location.coords.latitude,
             lng: location.coords.longitude,
           });
