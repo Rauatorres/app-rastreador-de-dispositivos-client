@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import disconnect from "../../../api/disconnect";
+import connectionConfigsDisconnect from "../../../api/connection-configs/connection-configs.disconnect";
 // import type ConnectionData from "../../../model/connectionData";
-import update from "../../../api/update";
-import getConnectedDevice from "../../../api/get-connected-device";
+import connectionConfigsUpdate from "../../../api/connection-configs/connection-configs.update";
+import getConnectedDevice from "../../../api/connection-configs/connection-configs.get-connected-device";
 import { useCookies } from "react-cookie";
 import TextInput from "../../../shared/ui/text-input/TextInput";
 import Button from "../../../shared/ui/button/Button";
@@ -28,7 +28,7 @@ export default function ConnectedDeviceScreen() {
   }, [cookie.connectionId]);
 
   async function disconnectDeviceFromUrl() {
-    const res = await disconnect(cookie.connectionId);
+    const res = await connectionConfigsDisconnect(cookie.connectionId);
     if (res) {
       console.log(res.msg);
     }
@@ -40,7 +40,7 @@ export default function ConnectedDeviceScreen() {
   }
 
   async function updateDeviceName() {
-    const res = await update(cookie.connectionId, {
+    const res = await connectionConfigsUpdate(cookie.connectionId, {
       name: newDeviceName,
     });
     if (res) {

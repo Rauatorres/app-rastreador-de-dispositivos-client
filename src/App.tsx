@@ -4,7 +4,7 @@ import ConnectDevicePage from "./pages/ConnectDevicePage";
 import PageContext from "./shared/context/page/PageContext";
 import MapPage from "./pages/MapPage";
 import { useCookies } from "react-cookie";
-import update from "./api/update";
+import deviceLocaleUpdate from "./api/device-locale/device-locale.update";
 
 function App() {
   const { currentPage } = useContext(PageContext);
@@ -17,11 +17,9 @@ function App() {
           // alert(
           //   `lat: ${location.coords.latitude} long: ${location.coords.longitude}`,
           // );
-          update(cookie.connectionId, {
-            deviceLocale: {
-              lat: location.coords.latitude,
-              lng: location.coords.longitude,
-            },
+          deviceLocaleUpdate(cookie.connectionId, {
+            lat: location.coords.latitude,
+            lng: location.coords.longitude,
           });
         });
       }, 1000);

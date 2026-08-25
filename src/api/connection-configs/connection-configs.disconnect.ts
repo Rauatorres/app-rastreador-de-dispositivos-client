@@ -1,13 +1,13 @@
 import axios from "axios";
 // import type ApiResponse from "../model/apiResponse";
-import { connectionConfigs } from "./connection-configs";
+import { configs } from "../configs/configs";
 
-export default async function disconnect(connectionId: string) {
+export default async function connectionConfigsDisconnect(
+  connectionId: string,
+) {
   try {
     const deleteResponseData = (
-      await axios.delete(
-        connectionConfigs.url + "connection-configs/" + connectionId,
-      )
+      await axios.delete(configs.url + "connection-configs/" + connectionId)
     ).data;
     return deleteResponseData;
   } catch (error) {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import connect from "../../../api/connect";
+import connectionConfigsConnect from "../../../api/connection-configs/connection-configs.connect";
 import type ConnectionData from "../../../model/connectionData";
 import { useCookies } from "react-cookie";
 import TextInput from "../../../shared/ui/text-input/TextInput";
@@ -27,7 +27,7 @@ export default function ConnectDeviceForm() {
   useEffect(() => {
     // console.log(data);
     async function connectDevice() {
-      const connection = await connect(data);
+      const connection = await connectionConfigsConnect(data);
       if (connection) {
         setCookie("connectionId", connection.id);
       }

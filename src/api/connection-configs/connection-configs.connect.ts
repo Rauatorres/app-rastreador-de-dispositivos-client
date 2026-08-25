@@ -1,12 +1,12 @@
 import axios from "axios";
-import type ConnectionData from "../model/connectionData";
+import type ConnectionData from "../../model/connectionData";
 // import type ApiResponse from "../model/apiResponse";
-import { connectionConfigs } from "./connection-configs";
+import { configs } from "../configs/configs";
 
-export default async function connect(data: ConnectionData) {
+export default async function connectionConfigsConnect(data: ConnectionData) {
   try {
     const connectionData = (
-      await axios.post(connectionConfigs.url + "connection-configs", data)
+      await axios.post(configs.url + "connection-configs", data)
     ).data;
     return connectionData as ConnectionData;
   } catch (error) {
