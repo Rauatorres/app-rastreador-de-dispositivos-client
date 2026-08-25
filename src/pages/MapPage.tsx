@@ -41,7 +41,7 @@ export default function MapPage() {
           key={device.id}
           name={device.name}
           connectionId={device.id!}
-          locale={device.locale}
+          locale={device.deviceLocale}
         />
       );
     });
@@ -50,7 +50,7 @@ export default function MapPage() {
   function showConnectedDevicesMarkers() {
     return connectedDevices.map((device) => {
       return (
-        <AdvancedMarker title={device.name} position={device.locale}>
+        <AdvancedMarker title={device.name} position={device.deviceLocale}>
           <Pin background={"#e42d2d"} />
         </AdvancedMarker>
       );
@@ -64,8 +64,8 @@ export default function MapPage() {
           // className="w-90 h-90"
           // style={{ width: "20rem", height: "20rem" }}
           defaultCenter={{
-            lat: connectedDevices[0].locale.lat,
-            lng: connectedDevices[0].locale.lng,
+            lat: connectedDevices[0].deviceLocale.lat,
+            lng: connectedDevices[0].deviceLocale.lng,
           }}
           defaultZoom={15}
           gestureHandling="greedy"
