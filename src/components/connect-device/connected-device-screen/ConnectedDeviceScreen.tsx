@@ -6,6 +6,7 @@ import getConnectedDevice from "../../../api/connection-configs/connection-confi
 import { useCookies } from "react-cookie";
 import TextInput from "../../../shared/ui/text-input/TextInput";
 import Button from "../../../shared/ui/button/Button";
+import deviceLocaleUpdate from "../../../api/device-locale/device-locale.update";
 
 export default function ConnectedDeviceScreen() {
   // const [currentDeviceName, setCurrentDeviceName] = useState("");
@@ -13,29 +14,42 @@ export default function ConnectedDeviceScreen() {
   const [cookie, setCookie] = useCookies(["connectionId"]);
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      navigator.geolocation.getCurrentPosition(async (location) => {
+        const connectionConfigs = await getConnectedDevice(cookie.connectionId);
+        deviceLocaleUpdate(connectionConfigs!.deviceLocale.id!, {
+          lat: location.coords.latitude,
+          lng: location.coords.longitude,
+        });
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [cookie.connectionId]);
+
+  useEffect(() => {
     async function getCurrentDeviceName() {
       const res = await getConnectedDevice(cookie.connectionId);
       if (res) {
-        // const responseResult = res.result as ConnectionData;
-        // setCurrentDeviceName(responseResult.name);
         setNewDeviceName(res.name);
       }
-      // else {
-      //   console.log(res.error);
-      // }
     }
     getCurrentDeviceName();
   }, [cookie.connectionId]);
 
   async function disconnectDeviceFromUrl() {
-    const res = await connectionConfigsDisconnect(cookie.connectionId);
-    if (res) {
-      console.log(res.msg);
-    }
+    // const res = await connectionConfigsDisconnect(cookie.connectionId);
+    await connectionConfigsDisconnect(cookie.connectionId);
+    // clearInterval(interval);
+    setCookie("connectionId", false);
+    // console.log("após desconectar - " + cookie.connectionId);
+    // console.log("desconectado");
+    // if (res) {
+    //   console.log(res.msg);
+    // }
     // else {
     //   console.log(res.error);
     // }
-    setCookie("connectionId", false);
     // setCookie("connectedServerUrl", "");
   }
 

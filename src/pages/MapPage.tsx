@@ -29,9 +29,11 @@ export default function MapPage() {
       }
     }
     registerConnectedDevices();
-    setInterval(() => {
+    const interval = setInterval(() => {
       registerConnectedDevices();
     }, 2000);
+
+    return () => clearInterval(interval);
   }, []);
 
   function showConnectedDevices() {
