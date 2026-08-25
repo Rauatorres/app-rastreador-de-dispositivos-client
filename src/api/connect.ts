@@ -5,7 +5,7 @@ import { connectionConfigs } from "./connection-configs";
 
 export default async function connect(data: ConnectionData) {
   const connectionData = (
-    await axios.post(connectionConfigs.url + "connect_device", data)
+    await axios.post(connectionConfigs.url + "connection-configs", data)
   ).data;
   // const responseObject: ApiResponse = {
   //   success: connectionData.success,

@@ -9,7 +9,7 @@ export default async function update(
 ) {
   return (
     await axios.patch(
-      connectionConfigs.url + `update_device/${connectionId}`,
+      connectionConfigs.url + `connection-configs/${connectionId}`,
       data,
     )
   ).data as ApiResponse;

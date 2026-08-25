@@ -4,7 +4,9 @@ import { connectionConfigs } from "./connection-configs";
 
 export default async function disconnect(connectionId: string) {
   const deleteResponseData = (
-    await axios.delete(connectionConfigs.url + "remove_device/" + connectionId)
+    await axios.delete(
+      connectionConfigs.url + "connection-configs/" + connectionId,
+    )
   ).data;
   const responseObject: ApiResponse = {
     success: deleteResponseData.success,
