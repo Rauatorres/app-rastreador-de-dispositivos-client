@@ -18,7 +18,7 @@ function App() {
           //   `lat: ${location.coords.latitude} long: ${location.coords.longitude}`,
           // );
           update(cookie.connectionId, {
-            locale: {
+            deviceLocale: {
               lat: location.coords.latitude,
               lng: location.coords.longitude,
             },

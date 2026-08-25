@@ -13,7 +13,7 @@ export default function ConnectDeviceForm() {
   const [dataNameInput, setDataNameInput] = useState("");
   const [data, setData] = useState<ConnectionData>({
     name: "",
-    locale: {
+    deviceLocale: {
       lat: 0,
       lng: 0,
     },

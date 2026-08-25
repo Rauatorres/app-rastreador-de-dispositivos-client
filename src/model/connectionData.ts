@@ -1,7 +1,7 @@
 export default interface ConnectionData {
-  connectionId?: string;
+  id?: string;
   name: string;
-  locale: {
+  deviceLocale: {
     lat: number;
     lng: number;
   };
