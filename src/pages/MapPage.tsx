@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import getConnectedDevices from "../api/connection-configs/connection-configs.get-connected-devices";
-import ConnectedDeviceCard from "../components/map/ConnectedDeviceCard";
+import ConnectedDeviceCard from "../components/map/connected-device-card/ConnectedDeviceCard";
 import type ConnectionData from "../model/connectionData";
 import {
   AdvancedMarker,
@@ -9,6 +9,7 @@ import {
   Pin,
   // type MapCameraChangedEvent,
 } from "@vis.gl/react-google-maps";
+import ConnectedDevicesHistory from "../components/map/connected-devices-history/ConnectedDevicesHistory";
 
 export default function MapPage() {
   const [connectedDevices, setConnectedDevices] = useState<ConnectionData[]>(
@@ -111,7 +112,7 @@ export default function MapPage() {
 
   return (
     <main className="p-5 flex flex-col gap-10">
-      <div>
+      <section>
         <h2>Mapa</h2>
         <div
           className="
@@ -136,11 +137,12 @@ export default function MapPage() {
             {showMap()}
           </APIProvider>
         </div>
-      </div>
-      <div>
+      </section>
+      <section>
         <h2 className="text-xl">Dispositivos Conectados</h2>
         <div className="my-10 flex gap-5">{showConnectedDevices()}</div>
-      </div>
+      </section>
+      <ConnectedDevicesHistory />
     </main>
   );
 }
