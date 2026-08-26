@@ -27,6 +27,7 @@ export default function ConnectDeviceForm() {
   useEffect(() => {
     // console.log(data);
     async function connectDevice() {
+      console.log("conectando");
       const connection = await connectionConfigsConnect(data);
       if (connection) {
         setCookie("connectionId", connection.id);
