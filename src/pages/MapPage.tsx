@@ -19,13 +19,18 @@ export default function MapPage() {
     async function registerConnectedDevices() {
       const getConnectedDevicesRequest = await getConnectedDevices();
 
-      if (getConnectedDevicesRequest.success) {
-        setConnectedDevices(
-          getConnectedDevicesRequest.result! as ConnectionData[],
-        );
-        console.log(getConnectedDevicesRequest.msg);
-      } else {
-        console.log(getConnectedDevicesRequest.error);
+      // if (getConnectedDevicesRequest.success) {
+      //   setConnectedDevices(
+      //     getConnectedDevicesRequest.result! as ConnectionData[],
+      //   );
+      //   console.log(getConnectedDevicesRequest.msg);
+      // } else {
+      //   console.log(getConnectedDevicesRequest.error);
+      // }
+      // console.log("connectedDevices:", connectedDevices);
+
+      if (getConnectedDevicesRequest) {
+        setConnectedDevices(getConnectedDevicesRequest as ConnectionData[]);
       }
     }
     registerConnectedDevices();
@@ -60,28 +65,49 @@ export default function MapPage() {
   }
 
   function showMap() {
-    if (connectedDevices.length > 0) {
-      return (
-        <Map
-          // className="w-90 h-90"
-          // style={{ width: "20rem", height: "20rem" }}
-          defaultCenter={{
-            lat: connectedDevices[0].deviceLocale.lat,
-            lng: connectedDevices[0].deviceLocale.lng,
-          }}
-          defaultZoom={15}
-          gestureHandling="greedy"
-          mapId="90dd261c43affd40955eb3a4"
-          disableDefaultUI
-        >
-          {/* <AdvancedMarker position={connectedDevices[0].locale}>
+    // if (connectedDevices.length > 0) {
+    return (
+      <Map
+        // className="w-90 h-90"
+        style={{ width: "100%", height: "100%" }}
+        defaultCenter={{
+          lat:
+            connectedDevices.length > 0
+              ? connectedDevices[0].deviceLocale.lat
+              : -11.382667,
+          lng:
+            connectedDevices.length > 0
+              ? connectedDevices[0].deviceLocale.lng
+              : -41.829304,
+        }}
+        defaultZoom={15}
+        gestureHandling="greedy"
+        mapId="90dd261c43affd40955eb3a4"
+        disableDefaultUI
+      >
+        {/* <AdvancedMarker position={connectedDevices[0].locale}>
             <Pin background={"#e42d2d"} />
           </AdvancedMarker> */}
-          {showConnectedDevicesMarkers()}
-        </Map>
-      );
-    }
+        {showConnectedDevicesMarkers()}
+      </Map>
+    );
+    // }
   }
+
+  // function showMap() {
+  //   return (
+  //     <Map
+  //       style={{ width: "100%", height: "100%" }}
+  //       defaultCenter={{
+  //         lat: -11.382667,
+  //         lng: -41.829304,
+  //       }}
+  //       defaultZoom={15}
+  //       gestureHandling="greedy"
+  //       disableDefaultUI
+  //     />
+  //   );
+  // }
 
   return (
     <main className="p-5 flex flex-col gap-10">
@@ -93,7 +119,12 @@ export default function MapPage() {
         my-5
       "
         >
-          <APIProvider apiKey="AIzaSyAVbkHnA-UrQhYf_DL7Yk8uvJWB5rfTj0g">
+          {/* <div className="w-full max-w-[600px] h-[500px] my-5"> */}
+          <APIProvider
+            apiKey="AIzaSyAVbkHnA-UrQhYf_DL7Yk8uvJWB5rfTj0g"
+            // onLoad={() => console.log("Google Maps carregou!")}
+            // onError={(error) => console.error("Erro Google Maps:", error)}
+          >
             {/* <Map
             // className="w-90 h-90"
             // style={{ width: "20rem", height: "20rem" }}
