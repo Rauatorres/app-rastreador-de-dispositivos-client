@@ -22,6 +22,7 @@ export default function ConnectedDeviceScreen() {
           lng: location.coords.longitude,
         });
       });
+      console.log("testando request");
     }, 1000);
 
     return () => clearInterval(interval);
