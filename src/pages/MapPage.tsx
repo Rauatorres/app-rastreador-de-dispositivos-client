@@ -7,14 +7,20 @@ import {
   APIProvider,
   Map,
   Pin,
+  Polyline,
   // type MapCameraChangedEvent,
 } from "@vis.gl/react-google-maps";
 import ConnectedDevicesHistory from "../components/map/connected-devices-history/ConnectedDevicesHistory";
+import type { DeviceLocaleRegister } from "../model/deviceLocaleRegister";
+import getAllDeviceLocaleHistory from "../api/device-locale-history/device-locale-history.getAll";
 
 export default function MapPage() {
   const [connectedDevices, setConnectedDevices] = useState<ConnectionData[]>(
     [],
   );
+  const [devicesLocaleHistoryToday, setDevicesLocaleHistoryToday] = useState<
+    DeviceLocaleRegister[]
+  >([]);
 
   useEffect(() => {
     async function registerConnectedDevices() {
@@ -42,6 +48,23 @@ export default function MapPage() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    async function settingDevicesLocaleHistory() {
+      setInterval(async () => {
+        const getDevicesLocaleHistory = await getAllDeviceLocaleHistory();
+        setDevicesLocaleHistoryToday(
+          getDevicesLocaleHistory.filter((register) => {
+            const date = new Date(register.date);
+            const today = new Date();
+
+            return date.getDate() == today.getDate();
+          }),
+        );
+      }, 5000);
+    }
+    settingDevicesLocaleHistory();
+  }, []);
+
   function showConnectedDevices() {
     return connectedDevices.map((device) => {
       return (
@@ -61,6 +84,37 @@ export default function MapPage() {
         <AdvancedMarker title={device.name} position={device.deviceLocale}>
           <Pin background={"#e42d2d"} />
         </AdvancedMarker>
+      );
+    });
+  }
+
+  function showDevicesPath() {
+    const connectedDevicesTodayPathRegister = connectedDevices.map((device) => {
+      return devicesLocaleHistoryToday.filter(
+        (register) => register.connectionConfigs.id == device.id,
+      );
+    });
+
+    const devicesPath = connectedDevicesTodayPathRegister.map(
+      (deviceRegisters) => {
+        return deviceRegisters.map((deviceRegister) => {
+          return {
+            lat: deviceRegister.connectionConfigs.deviceLocale.lat,
+            lng: deviceRegister.connectionConfigs.deviceLocale.lng,
+          };
+        });
+      },
+    );
+    // console.log(devicesPath);
+
+    return devicesPath.map((locale) => {
+      return (
+        <Polyline
+          path={locale}
+          strokeColor="#5eccff"
+          strokeOpacity={0.8}
+          strokeWeight={5}
+        />
       );
     });
   }
@@ -89,6 +143,7 @@ export default function MapPage() {
         {/* <AdvancedMarker position={connectedDevices[0].locale}>
             <Pin background={"#e42d2d"} />
           </AdvancedMarker> */}
+        {showDevicesPath()}
         {showConnectedDevicesMarkers()}
       </Map>
     );
